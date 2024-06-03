@@ -1,0 +1,72 @@
+"""
+< ALY6140 Module 2 Assignment>
+
+
+Copyright (c) 2024 
+Licensed
+Written by Andi Alla
+
+Northeastern University 
+
+06/02/2024
+
+# you can also rely on the docstring documentation from pandas on how to format dosctrings:
+# https://pandas.pydata.org/pandas-docs/stable/development/contributing_docstring.html
+
+"""
+
+
+import pandas as pd
+import json
+import os
+
+# Function to import a CSV file and return it as a pandas DataFrame.
+# Args:  file_path (str): The path to the CSV file.
+# Returns:pd.DataFrame: DataFrame containing the CSV data.
+def import_csv(file_path):
+    df = pd.read_csv(file_path, delimiter=',', header=0, na_values=['NA', '?'])
+    return df
+
+# Function to import a text file and return it as a list of lines.
+# Args:  file_path (str): The path to the text file.
+# Returns:  list: List containing the lines of the text file.
+def import_txt(file_path):
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    return lines
+
+# Function to import a JSON file and return it as a dictionary.
+# Args: file_path (str): The path to the JSON file.
+# Returns:  dict: Dictionary containing the JSON data.
+def import_json(file_path):
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+    return data
+
+# Function to import an Excel file and return it as a pandas DataFrame.
+# Args:file_path (str): The path to the Excel file.
+# Returns: pd.DataFrame: DataFrame containing the Excel data.
+def import_excel(file_path):
+    df = pd.read_excel(file_path, sheet_name=0, header=0, na_values=['NA', '?'])
+    return df
+
+if __name__ == '__main__':
+    # Get the path to the Downloads directory
+    downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
+    
+    csv_file = os.path.join(downloads_path, 'Neural_data.csv')
+    txt_file = os.path.join(downloads_path, 'network_data.txt')
+    json_file = os.path.join(downloads_path, 'nested_data.json')
+    excel_file = os.path.join(downloads_path, 'Excel_report.xlsx')
+    
+    # Importing the files
+    csv_data = import_csv(csv_file)
+    txt_data = import_txt(txt_file)
+    json_data = import_json(json_file)
+    excel_data = import_excel(excel_file)
+    
+    # Testing if working 
+    print(f"CSV Data (first 5 rows):\n{csv_data.head()}\n")
+    print(f"Text Data (first 5 lines):\n{txt_data[:5]}\n")
+    print(f"JSON Data (keys):\n{list(json_data.keys())}\n")
+    print(f"Excel Data (first 5 rows):\n{excel_data.head()}\n")
